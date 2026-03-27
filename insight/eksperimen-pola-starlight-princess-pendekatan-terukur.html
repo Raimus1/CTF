@@ -22,6 +22,8 @@
             --color-jaffa-700: #c24100;
             --color-jaffa-500: #ff6e28;
             --color-yolk-300: #ffc800;
+            --color-gold: #f8bf05;
+            --color-gold-dark: #c09e08;
         }
 
         * {
@@ -41,6 +43,196 @@
             max-width: 1408px;
             margin: 0 auto;
             padding: 0 16px;
+        }
+
+        /* ========== BUTTON STYLES - PALING PENTING ========== */
+        
+        /* Button Base */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            gap: 8px;
+        }
+
+        .btn--primary {
+            background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
+            color: #000f12;
+            box-shadow: 0 4px 15px rgba(248, 191, 5, 0.3);
+        }
+
+        .btn--primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(248, 191, 5, 0.5);
+        }
+
+        .btn--secondary {
+            background: transparent;
+            color: var(--color-gold);
+            border: 2px solid var(--color-gold);
+        }
+
+        .btn--secondary:hover {
+            background: var(--color-gold);
+            color: #000f12;
+        }
+
+        .btn--large {
+            padding: 16px 32px;
+            font-size: 16px;
+        }
+
+        .btn--block {
+            width: 100%;
+        }
+
+        /* Header Mini Buttons */
+        .header-mini__buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .header-mini__btn {
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            border-radius: 4px;
+            color: #000f12;
+            background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
+        }
+
+        /* N-Columns Buttons (Mobile Bottom) */
+        .n-columns-2 {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .n-columns-2 a {
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            padding: 16px 10px;
+            background: linear-gradient(to top, #804f05 0%, #a67c00 100%);
+            border: 2px solid var(--color-gold);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .n-columns-2 a:hover {
+            background: linear-gradient(to top, #a67c00 0%, #804f05 100%);
+            box-shadow: inset 0 0 20px rgba(248, 191, 5, 0.3);
+        }
+
+        .n-columns-2 a::before {
+            content: "⚡";
+        }
+
+        /* CTA Blade Buttons (Neon Style) */
+        .cta-blade {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 28px 0;
+            justify-content: center;
+        }
+
+        .cta-blade .blade {
+            --g1: #5ee7ff;
+            --g2: #8b5cf6;
+            position: relative;
+            isolation: isolate;
+            flex: 1 1 48%;
+            min-width: 240px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            font-weight: 800;
+            font-size: 16px;
+            display: grid;
+            place-items: center;
+            padding: 18px 20px;
+            color: #000F12;
+            background: radial-gradient(120% 180% at 120% -20%, rgb(9, 221, 175) 0%, rgb(9, 221, 175) 40%),
+                        linear-gradient(180deg, rgba(12,12,16,.92), rgba(8,8,12,.92));
+            clip-path: polygon(14px 0%, 100% 0%, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0% 100%, 0% 14px);
+            box-shadow: 0 12px 30px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.06);
+            transition: transform .28s ease, box-shadow .28s ease;
+            overflow: hidden;
+        }
+
+        .cta-blade .blade::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            padding: 2px;
+            background: conic-gradient(from 0deg, var(--g1), var(--g2), #00ffaa, #03ff4f, var(--g1));
+            background-size: 200% 200%;
+            animation: spinGlow 6s linear infinite;
+            clip-path: polygon(14px 0%, 100% 0%, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0% 100%, 0% 14px);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: .9;
+        }
+
+        .cta-blade .blade:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 36px rgba(0,0,0,.55), 0 0 28px rgba(139,92,246,.32);
+        }
+
+        .cta-blade .masuk { --g1:#22d3ee; --g2:#6366f1; }
+        .cta-blade .daftar { --g1:#f59e0b; --g2:#4463ef; }
+
+        @keyframes spinGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Popup Buttons */
+        .popup-actions {
+            padding: 14px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .popup-actions a {
+            display: block;
+            padding: 14px 0;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            color: #fff;
+            background: linear-gradient(to right, var(--color-gold-dark), #523e07);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .popup-actions a:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(248, 191, 5, 0.4);
         }
 
         /* Header Styles */
@@ -63,7 +255,8 @@
         .global-header-menu__list {
             display: flex;
             list-style: none;
-            gap: 24px;
+            gap: 16px;
+            align-items: center;
         }
 
         .global-header-menu__link {
@@ -246,69 +439,6 @@
             color: #383838;
         }
 
-        /* CTA Buttons */
-        .cta-blade {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin: 28px 0;
-            justify-content: center;
-        }
-
-        .cta-blade .blade {
-            --g1: #5ee7ff;
-            --g2: #8b5cf6;
-            position: relative;
-            isolation: isolate;
-            flex: 1 1 48%;
-            min-width: 240px;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: .6px;
-            font-weight: 800;
-            font-size: 16px;
-            display: grid;
-            place-items: center;
-            padding: 18px 20px;
-            color: #000F12;
-            background: radial-gradient(120% 180% at 120% -20%, rgb(9, 221, 175) 0%, rgb(9, 221, 175) 40%),
-                        linear-gradient(180deg, rgba(12,12,16,.92), rgba(8,8,12,.92));
-            clip-path: polygon(14px 0%, 100% 0%, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0% 100%, 0% 14px);
-            box-shadow: 0 12px 30px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.06);
-            transition: transform .28s ease, box-shadow .28s ease;
-            overflow: hidden;
-        }
-
-        .cta-blade .blade::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            padding: 2px;
-            background: conic-gradient(from 0deg, var(--g1), var(--g2), #00ffaa, #03ff4f, var(--g1));
-            background-size: 200% 200%;
-            animation: spinGlow 6s linear infinite;
-            clip-path: polygon(14px 0%, 100% 0%, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0% 100%, 0% 14px);
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: .9;
-        }
-
-        .cta-blade .blade:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 18px 36px rgba(0,0,0,.55), 0 0 28px rgba(139,92,246,.32);
-        }
-
-        .cta-blade .masuk { --g1:#22d3ee; --g2:#6366f1; }
-        .cta-blade .daftar { --g1:#f59e0b; --g2:#4463ef; }
-
-        @keyframes spinGlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
         /* Fixed Footer */
         .fixed-footer {
             display: flex;
@@ -346,6 +476,21 @@
         /* Mobile Header */
         .header-mini {
             display: none;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: #000F12;
+        }
+
+        .header-mini__logo img {
+            height: 40px;
+        }
+
+        .btn--square {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 8px;
+            font-size: 18px;
         }
 
         @media (max-width: 1024px) {
@@ -355,36 +500,6 @@
 
             .header-mini {
                 display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 12px 16px;
-                background: #000F12;
-            }
-
-            .header-mini__logo img {
-                height: 40px;
-            }
-
-            .btn--square {
-                color: #ffffff;
-                text-decoration: none;
-                padding: 8px;
-            }
-
-            .n-columns-2 {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                font-weight: 700;
-                letter-spacing: 2px;
-            }
-
-            .n-columns-2 a {
-                text-align: center;
-                color: #fff;
-                padding: 13px 10px;
-                background: linear-gradient(to top, #804f05 0%, #804f05 100%);
-                border: 2px solid #ffffff;
-                text-decoration: none;
             }
         }
 
@@ -429,22 +544,6 @@
             font-size: 18px;
             line-height: 1.2;
             color: #ddb501;
-        }
-
-        .popup-actions {
-            padding: 14px;
-            display: grid;
-            gap: 10px;
-        }
-
-        .popup-actions a {
-            display: block;
-            padding: 12px 0;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 700;
-            color: #fff;
-            background: linear-gradient(to right, #c09e08, #523e07);
         }
 
         .popup-footer {
@@ -521,10 +620,11 @@
       ]
     }
     </script>
+<base target="_blank">
 </head>
 
 <body>
-    <!-- Popup -->
+    <!-- ========== POPUP LOGIN/DAFTAR ========== -->
     <div class="popup-overlay">
         <div class="popup-box">
             <div class="popup-media">
@@ -532,14 +632,14 @@
             </div>
             <h1 class="popup-title">Eksperimen Pola Starlight Princess: Menguji Ritme Permainan Slot Digital dengan Pendekatan Terukur</h1>
             <div class="popup-actions">
-                <a href="https://assets-gacor-hari-ini.pages.dev">LOGIN</a>
-                <a href="https://assets-gacor-hari-ini.pages.dev">DAFTAR</a>
+                <a href="https://assets-gacor-hari-ini.pages.dev">🔥 LOGIN</a>
+                <a href="https://assets-gacor-hari-ini.pages.dev">✨ DAFTAR</a>
             </div>
             <div class="popup-footer">© Copyright | PINTUPLAY Link Gacor Terbaru 2026</div>
         </div>
     </div>
 
-    <!-- Mobile Header -->
+    <!-- ========== MOBILE HEADER ========== -->
     <div class="header-mini">
         <div class="header-mini__button--categories">
             <a class="btn--square" href="#">
@@ -547,20 +647,18 @@
             </a>
         </div>
         <div class="header-mini__logo">
-            <a href="#">
+            <a href="https://raimus1.github.io/CTF/insight/eksperimen-pola-starlight-princess-pendekatan-terukur.html">
                 <img alt="Logo Baru" src="https://pafiteku.org/uisu/file/logo1.png">
             </a>
         </div>
-        <div class="header-mini__button--account">
-            <a class="btn--square" href="#">
-                <i class="fas fa-user"></i>
-            </a>
+        <div class="header-mini__buttons">
+            <a href="https://assets-gacor-hari-ini.pages.dev" class="header-mini__btn">LOGIN</a>
         </div>
     </div>
 
-    <!-- Desktop Header -->
+    <!-- ========== DESKTOP HEADER ========== -->
     <header class="site-header">
-        <div class="global-header is-hidden-tablet-and-below">
+        <div class="global-header">
             <div class="grid-container">
                 <div class="global-header__wrapper">
                     <a href="https://raimus1.github.io/CTF/insight/eksperimen-pola-starlight-princess-pendekatan-terukur.html">
@@ -574,17 +672,13 @@
                             <li>
                                 <a class="global-header-menu__link" href="#">Situs Game Online</a>
                             </li>
+                            <!-- BUTTON LOGIN DESKTOP -->
                             <li>
-                                <a class="global-header-menu__link" href="https://assets-gacor-hari-ini.pages.dev">
-                                    <svg class="global-header-menu__icon" viewBox="0 0 16 16"><path fill="currentColor" d="M3.5 2A1.5 1.5 0 0 1 5 3.5 1.5 1.5 0 0 1 3.5 5 1.5 1.5 0 0 1 2 3.5 1.5 1.5 0 0 1 3.5 2zM8 2a1.5 1.5 0 0 1 1.5 1.5A1.5 1.5 0 0 1 8 5a1.5 1.5 0 0 1-1.5-1.5A1.5 1.5 0 0 1 8 2zM12.5 2A1.5 1.5 0 0 1 14 3.5 1.5 1.5 0 0 1 12.5 5 1.5 1.5 0 0 1 11 3.5 1.5 1.5 0 0 1 12.5 2z"/></svg>
-                                    <span>LOGIN</span>
-                                </a>
+                                <a href="https://assets-gacor-hari-ini.pages.dev" class="btn btn--primary">LOGIN</a>
                             </li>
+                            <!-- BUTTON DAFTAR DESKTOP -->
                             <li>
-                                <a class="global-header-menu__link" href="https://assets-gacor-hari-ini.pages.dev">
-                                    <svg class="global-header-menu__icon" viewBox="0 0 16 16"><path fill="currentColor" d="M0 1.5A1.5 1.5 0 0 1 1.5 0h13A1.5 1.5 0 0 1 16 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13zM1.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-13a.5.5 0 0 0-.5-.5h-13z"/><path fill="currentColor" d="M4 7.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zM4 4.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/></svg>
-                                    <span>DAFTAR</span>
-                                </a>
+                                <a href="https://assets-gacor-hari-ini.pages.dev" class="btn btn--secondary">DAFTAR</a>
                             </li>
                         </ul>
                     </nav>
@@ -592,7 +686,7 @@
             </div>
         </div>
 
-        <div class="header-site-titles is-hidden-tablet-and-below">
+        <div class="header-site-titles">
             <div class="grid-container">
                 <nav class="header-site-titles__container">
                     <div class="header-site-titles__site">
@@ -620,7 +714,7 @@
             </div>
         </div>
 
-        <div class="header-categories is-hidden-tablet-and-below">
+        <div class="header-categories">
             <div class="grid-container">
                 <ul class="header-categories__links">
                     <li><a class="header-categories__main-link" href="#">Situs Terpercaya</a></li>
@@ -631,19 +725,20 @@
             </div>
         </div>
 
+        <!-- ========== BUTTON BAR LOGIN/DAFTAR (MOBILE & DESKTOP) ========== -->
         <div class="n-columns-2" style="font-size: 20px;">
-            <a href="https://assets-gacor-hari-ini.pages.dev" rel="nofollow noreferrer" class="login">⚡ LOGIN ⚡</a>
-            <a href="https://assets-gacor-hari-ini.pages.dev" rel="nofollow noreferrer" class="register">⚡ DAFTAR ⚡</a>
+            <a href="https://assets-gacor-hari-ini.pages.dev" rel="nofollow noreferrer">⚡ LOGIN ⚡</a>
+            <a href="https://assets-gacor-hari-ini.pages.dev" rel="nofollow noreferrer">⚡ DAFTAR ⚡</a>
         </div>
     </header>
 
-    <!-- Context Header -->
+    <!-- ========== CONTEXT HEADER ========== -->
     <div class="context-header">
         <div class="grid-container">
             <nav class="breadcrumbs">
                 <a href="#">PINTUPLAY</a> / 
                 <a href="#">Situs Terpercaya</a> / 
-                <a href="#">Eksperimen Pola Starlight Princess: Menguji Ritme Permainan Slot Digital dengan Pendekatan Terukur</a>
+                <a href="#">Eksperimen Pola Starlight Princess</a>
             </nav>
 
             <div class="item-header">
@@ -674,7 +769,7 @@
         </div>
     </div>
 
-    <!-- Main Content -->
+    <!-- ========== MAIN CONTENT ========== -->
     <div class="content-main">
         <div class="grid-container">
             <div class="content-s">
@@ -683,9 +778,10 @@
                         <img alt="Eksperimen Pola Starlight Princess" src="https://assets-hunter.store/assets/img/dc/assets/26-03-26/pp6.webp">
                     </a>
                     <div class="item-preview__actions">
+                        <!-- ========== CTA BUTTONS DI KONTEN ========== -->
                         <div class="cta-blade">
-                            <a href="https://assets-gacor-hari-ini.pages.dev" class="blade masuk">LOGIN</a>
-                            <a href="https://assets-gacor-hari-ini.pages.dev" class="blade daftar">DAFTAR</a>
+                            <a href="https://assets-gacor-hari-ini.pages.dev" class="blade masuk">🔥 LOGIN SEKARANG</a>
+                            <a href="https://assets-gacor-hari-ini.pages.dev" class="blade daftar">✨ DAFTAR GRATIS</a>
                         </div>
                     </div>
                 </div>
@@ -693,45 +789,56 @@
                 <div class="article-content">
                     <h1>Eksperimen Pola Starlight Princess: Menguji Ritme Permainan Slot Digital dengan Pendekatan Terukur</h1>
                     
-                    <p>Analisis berbasis eksperimen untuk memahami pola permainan Starlight Princess melalui pendekatan terukur membuka wawasan mendalam tentang bagaimana ritme spin dan struktur taruhan dapat mempengaruhi hasil dalam jangka panjang. Starlight Princess, sebagai slot dengan volatilitas tinggi yang dikembangkan oleh Pragmatic Play, menawarkan mekanisme unik berupa simbol pembayaran di mana saja (scatter pays) dan fitur pengali yang dapat muncul secara acak selama permainan dasar maupun putaran gratis. Dalam konteks ini, pendekatan terukur menjadi sangat relevan karena memungkinkan pemain untuk mengidentifikasi pola-pola tertentu yang mungkin tidak terlihat dalam permainan kasual.</p>
+                    <p>Analisis berbasis eksperimen untuk memahami pola permainan Starlight Princess melalui pendekatan terukur membuka wawasan mendalam tentang bagaimana ritme spin dan struktur taruhan dapat mempengaruhi hasil dalam jangka panjang. Starlight Princess, sebagai slot dengan volatilitas tinggi yang dikembangkan oleh Pragmatic Play, menawarkan mekanisme unik berupa simbol pembayaran di mana saja (scatter pays) dan fitur pengali yang dapat muncul secara acak selama permainan dasar maupun putaran gratis.</p>
                     
-                    <p>Penelitian ini menggunakan metodologi eksperimental yang ketat, melibatkan 150 sesi bermain yang tercatat secara sistematis. Setiap sesi mencakup parameter seperti jumlah spin, nilai taruhan, frekuensi fitur bonus, dan hasil akhir. Data ini kemudian dianalisis untuk mengidentifikasi korelasi antara pola permainan dan hasil yang dicapai. Artikel ini akan memaparkan temuan utama dari eksperimen tersebut, termasuk insight tentang ritme optimal, manajemen bankroll, dan strategi adaptif yang dapat meningkatkan pengalaman bermain.</p>
+                    <p>Penelitian ini menggunakan metodologi eksperimental yang ketat, melibatkan 150 sesi bermain yang tercatat secara sistematis. Setiap sesi mencakup parameter seperti jumlah spin, nilai taruhan, frekuensi fitur bonus, dan hasil akhir. Data ini kemudian dianalisis untuk mengidentifikasi korelasi antara pola permainan dan hasil yang dicapai.</p>
 
                     <h2>Metodologi Eksperimen Terukur</h2>
-                    <p>Eksperimen ini dirancang dengan kontrol variabel yang ketat untuk memastikan validitas hasil. Setiap sesi bermain menggunakan bankroll awal yang identik (Rp 500.000) dengan nilai taruhan tetap (Rp 1.000 per spin) untuk menghilangkan faktor variasi taruhan. Total 150 sesi dilakukan selama periode 45 hari, dengan setiap sesi berakhir ketika bankroll habis, target profit tercapai (2x bankroll awal), atau batas waktu 2 jam tercapai. Semua sesi direkam menggunakan software tracking yang mencatat timestamp setiap spin, hasil, dan fitur yang terpicu.</p>
+                    <p>Eksperimen ini dirancang dengan kontrol variabel yang ketat untuk memastikan validitas hasil. Setiap sesi bermain menggunakan bankroll awal yang identik (Rp 500.000) dengan nilai taruhan tetap (Rp 1.000 per spin) untuk menghilangkan faktor variasi taruhan. Total 150 sesi dilakukan selama periode 45 hari, dengan setiap sesi berakhir ketika bankroll habis, target profit tercapai (2x bankroll awal), atau batas waktu 2 jam tercapai.</p>
                     
-                    <p>Variabel utama yang diukur meliputi: (1) Interval antar kemenangan signifikan (>10x taruhan), (2) Frekuensi kemunculan simbol pengali (multiplier), (3) Pola distribusi kemenangan dalam rentang waktu, (4) Korelasi antara durasi bermain dan profitabilitas, serta (5) Efektivitas strategi penghentian (stop-loss dan take-profit). Data dianalisis menggunakan metode statistik deskriptif dan inferensial untuk mengidentifikasi pola yang signifikan secara statistik.</p>
+                    <p>Variabel utama yang diukur meliputi: (1) Interval antar kemenangan signifikan (>10x taruhan), (2) Frekuensi kemunculan simbol pengali (multiplier), (3) Pola distribusi kemenangan dalam rentang waktu, (4) Korelasi antara durasi bermain dan profitabilitas, serta (5) Efektivitas strategi penghentian (stop-loss dan take-profit).</p>
 
                     <h2>Temuan: Ritme dan Pola Permainan</h2>
                     <p>Hasil eksperimen menunjukkan adanya ritme tertentu dalam distribusi kemenangan Starlight Princess. Analisis interval antar kemenangan signifikan mengungkapkan pola yang tidak sepenuhnya acak—terdapat cluster di mana kemenangan cenderung terjadi dalam kelompok, diikuti oleh periode kering (dry spell) yang lebih panjang. Secara spesifik, 68% kemenangan signifikan terjadi dalam rentang 10-25 spin setelah kemenangan signifikan sebelumnya, sementara periode kering rata-rata berlangsung 35-50 spin.</p>
                     
-                    <p>Pola ini mengindikasikan adanya siklus dalam algoritma permainan yang mungkin terkait dengan mekanisme RNG (Random Number Generator) dan struktur volatilitas. Temuan penting lainnya adalah frekuensi kemunculan simbol pengali yang lebih tinggi pada spin ke-15 hingga ke-25 dalam setiap sesi, yang kemudian menurun secara konsisten hingga mencapai titik terendah sebelum sesi berakhir. Fenomena ini menyarankan adanya fase "pemanasan" dalam permainan yang mungkin berkaitan dengan mekanisme adaptif slot modern.</p>
+                    <p>Pola ini mengindikasikan adanya siklus dalam algoritma permainan yang mungkin terkait dengan mekanisme RNG (Random Number Generator) dan struktur volatilitas. Temuan penting lainnya adalah frekuensi kemunculan simbol pengali yang lebih tinggi pada spin ke-15 hingga ke-25 dalam setiap sesi.</p>
 
                     <h2>Strategi Berbasis Data: Pendekatan Ritmik</h2>
                     <p>Berdasarkan temuan pola ritme, peneliti merumuskan strategi "Pendekatan Ritmik" yang menyesuaikan perilaku bermain berdasarkan fase permainan yang terdeteksi. Strategi ini terdiri dari tiga fase: (1) Fase Observasi (spin 1-15): taruhan minimal untuk mengamati pola awal, (2) Fase Agresif (spin 16-40): peningkatan taruhan 50% ketika indikator positif terdeteksi, dan (3) Fase Konservatif (spin 41+): pengurangan taruhan atau penghentian jika pola negatif terkonfirmasi.</p>
                     
-                    <p>Uji coba strategi ini pada 50 sesi tambahan menunjukkan peningkatan profitabilitas rata-rata sebesar 23% dibandingkan dengan pendekatan taruhan tetap. Lebih penting lagi, strategi ini secara signifikan mengurangi risiko kerugian besar—hanya 12% sesi yang berakhir dengan kerugian total bankroll, dibandingkan dengan 34% pada pendekatan konvensional. Ini menunjukkan bahwa pemahaman ritme permainan dapat menjadi alat manajemen risiko yang efektif.</p>
+                    <p>Uji coba strategi ini pada 50 sesi tambahan menunjukkan peningkatan profitabilitas rata-rata sebesar 23% dibandingkan dengan pendekatan taruhan tetap. Lebih penting lagi, strategi ini secara signifikan mengurangi risiko kerugian besar—hanya 12% sesi yang berakhir dengan kerugian total bankroll, dibandingkan dengan 34% pada pendekatan konvensional.</p>
+
+                    <!-- ========== BUTTON CTA DI TENGAH ARTIKEL ========== -->
+                    <div class="cta-blade" style="margin: 40px 0;">
+                        <a href="https://assets-gacor-hari-ini.pages.dev" class="blade masuk" style="flex: 1 1 100%;">🚀 COBA STRATEGI INI SEKARANG - LOGIN</a>
+                    </div>
 
                     <h2>Implikasi untuk Manajemen Bankroll</h2>
                     <p>Temuan tentang pola ritme memiliki implikasi langsung untuk praktik manajemen bankroll. Eksperimen menunjukkan bahwa membagi bankroll menjadi unit sesi yang lebih pendek (target 30-40 spin) lebih efektif daripada sesi maraton. Rata-rata, sesi yang diakhiri secara sukarela setelah 40 spin—terlepas dari status profit—menunjukkan hasil akumulatif yang lebih baik dalam jangka panjang dibandingkan sesi yang diteruskan hingga batas waktu atau kehabisan dana.</p>
                     
-                    <p>Prinsip "exit while ahead" yang diterapkan secara sistematis, berdasarkan data ritme, terbukti lebih berhasil daripada pendekatan intuitif. Pemain yang mengikuti protokol penghentian berbasis data ini mengalami tingkat kepuasan yang lebih tinggi dan stres yang lebih rendah, yang diukur melalui survei post-sesi. Ini menggarisbawahi pentingnya disiplin sistematis dalam perjudian yang bertanggung jawab.</p>
+                    <p>Prinsip "exit while ahead" yang diterapkan secara sistematis, berdasarkan data ritme, terbukti lebih berhasil daripada pendekatan intuitif. Pemain yang mengikuti protokol penghentian berbasis data ini mengalami tingkat kepuasan yang lebih tinggi dan stres yang lebih rendah.</p>
 
                     <h2>Keterbatasan dan Validitas Eksternal</h2>
-                    <p>Penting untuk mengakui keterbatasan dalam eksperimen ini. Pertama, hasil spesifik untuk Starlight Princess mungkin tidak langsung dapat diterapkan pada slot lain dengan mekanisme berbeda. Kedua, meskipun pola ritme terdeteksi, slot tetap bersifat probabilistik dan tidak ada jaminan bahwa pola masa lalu akan berulang di masa depan. Ketiga, faktor psikologis individual yang tidak terukur dalam eksperimen ini dapat mempengaruhi keberhasilan implementasi strategi.</p>
+                    <p>Penting untuk mengakui keterbatasan dalam eksperimen ini. Pertama, hasil spesifik untuk Starlight Princess mungkin tidak langsung dapat diterapkan pada slot lain dengan mekanisme berbeda. Kedua, meskipun pola ritme terdeteksi, slot tetap bersifat probabilistik dan tidak ada jaminan bahwa pola masa lalu akan berulang di masa depan.</p>
                     
-                    <p>Validitas eksternal juga dibatasi oleh kondisi eksperimen yang terkontrol—pemain dalam situasi nyata mungkin menghadapi gangguan, tekanan waktu, atau faktor emosional yang tidak dapat direplikasi dalam pengaturan eksperimental. Namun demikian, metodologi terukur yang digunakan memberikan fondasi yang kuat untuk pengujian lebih lanjut dan pengembangan strategi yang lebih canggih.</p>
+                    <p>Validitas eksternal juga dibatasi oleh kondisi eksperimen yang terkontrol—pemain dalam situasi nyata mungkin menghadapi gangguan, tekanan waktu, atau faktor emosional yang tidak dapat direplikasi dalam pengaturan eksperimental.</p>
 
                     <h2>Kesimpulan: Menuju Permainan yang Lebih Terinformasi</h2>
                     <p>Eksperimen pola Starlight Princess dengan pendekatan terukur menunjukkan bahwa bahkan dalam permainan yang didesain untuk bersifat acak, terdapat struktur statistik yang dapat dianalisis dan dimanfaatkan untuk pengambilan keputusan yang lebih baik. Temuan tentang ritme permainan, fase pemanasan, dan distribusi cluster kemenangan memberikan dasar empiris untuk strategi yang sebelumnya hanya berdasarkan intuisi.</p>
                     
-                    <p>Pada intinya, pendekatan terukur dalam slot bukan tentang "mengalahkan sistem"—yang secara matematis tidak mungkin dalam jangka panjang—tetapi tentang memaksimalkan pengalaman bermain, memperpanjang durasi hiburan, dan mengelola risiko secara efektif. Dengan memahami pola dan menerapkan disiplin berbasis data, pemain dapat bertransisi dari perjudian reaktif ke permainan yang proaktif dan terinformasi. Dalam dunia di mana data semakin mendominasi, bahkan hiburan seperti slot dapat didekati dengan metodologi ilmiah yang meningkatkan pemahaman dan, pada akhirnya, kepuasan pemain.</p>
+                    <p>Pada intinya, pendekatan terukur dalam slot bukan tentang "mengalahkan sistem"—yang secara matematis tidak mungkin dalam jangka panjang—tetapi tentang memaksimalkan pengalaman bermain, memperpanjang durasi hiburan, dan mengelola risiko secara efektif. Dengan memahami pola dan menerapkan disiplin berbasis data, pemain dapat bertransisi dari perjudian reaktif ke permainan yang proaktif dan terinformasi.</p>
+
+                    <!-- ========== FINAL CTA BUTTONS ========== -->
+                    <div class="cta-blade" style="margin-top: 40px;">
+                        <a href="https://assets-gacor-hari-ini.pages.dev" class="blade masuk">🔥 LOGIN & MAIN SEKARANG</a>
+                        <a href="https://assets-gacor-hari-ini.pages.dev" class="blade daftar">✨ DAFTAR AKUN BARU</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Fixed Footer -->
+    <!-- ========== FIXED FOOTER ========== -->
     <div class="fixed-footer">
         <a href="https://assets-gacor-hari-ini.pages.dev" rel="nofollow noopener" target="_blank">
             <img src="https://imagizer.imageshack.com/img922/8638/Kithch.png" alt="BONUS PINTUPLAY">
@@ -756,7 +863,7 @@
     </div>
 
     <script>
-        // Close popup functionality
+        // Close popup when clicking outside
         document.querySelector('.popup-overlay').addEventListener('click', function(e) {
             if (e.target === this) {
                 this.style.display = 'none';
