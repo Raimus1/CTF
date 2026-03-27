@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CTF — Capture The Flag</title>
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://raimus1.github.io/CTF/" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1VLBDS72X0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1VLBDS72X0');
+  </script>
+
+  <!-- SEO Meta -->
+  <meta name="description" content="CTF (Capture The Flag) — Kompetisi cybersecurity. Uji kemampuan hacking-mu, temukan kerentanan, rebut bendera, dan jadilah yang terbaik." />
+  <meta name="keywords" content="CTF, Capture The Flag, cybersecurity, hacking, web exploitation, cryptography, forensics, binary exploitation, reverse engineering, OSINT" />
+  <meta name="author" content="raimus1" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://raimus1.github.io/CTF/" />
+  <meta property="og:title" content="CTF — Capture The Flag" />
+  <meta property="og:description" content="Kompetisi cybersecurity. Uji kemampuan hacking-mu, rebut bendera, jadilah yang terbaik." />
+  <meta property="og:image" content="https://raimus1.github.io/CTF/og-image.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://raimus1.github.io/CTF/" />
+  <meta name="twitter:title" content="CTF — Capture The Flag" />
+  <meta name="twitter:description" content="Kompetisi cybersecurity. Uji kemampuan hacking-mu, rebut bendera, jadilah yang terbaik." />
+  <meta name="twitter:image" content="https://raimus1.github.io/CTF/og-image.png" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #050a0e;
+      --bg2: #080f15;
+      --green: #00ff88;
+      --cyan: #00e5ff;
+      --red: #ff2d55;
+      --yellow: #ffd700;
+      --dim: #1a2e3a;
+      --text: #c8e6f0;
+      --mono: 'Share Tech Mono', monospace;
+      --display: 'Orbitron', sans-serif;
+      --body: 'Rajdhani', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    /* SCAN LINE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,255,136,0.015) 2px,
+        rgba(0,255,136,0.015) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* GRID BG */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== HERO ===== */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      z-index: 1;
+    }
+
+    .glitch-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(5rem, 18vw, 13rem);
+      font-weight: 900;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      line-height: 1;
+      text-shadow:
+        0 0 20px rgba(0,255,136,0.6),
+        0 0 60px rgba(0,255,136,0.3),
+        0 0 120px rgba(0,255,136,0.1);
+      animation: flicker 6s infinite;
+    }
+
+    .hero-title::before,
+    .hero-title::after {
+      content: 'CTF';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+    }
+    .hero-title::before {
+      color: var(--red);
+      clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+      animation: glitch-a 3s infinite steps(2);
+      opacity: 0.7;
+    }
+    .hero-title::after {
+      color: var(--cyan);
+      clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%);
+      animation: glitch-b 3.5s infinite steps(2);
+      opacity: 0.7;
+    }
+
+    @keyframes glitch-a {
+      0%,100%  { transform: translate(0,0); }
+      20%      { transform: translate(-4px, 2px); }
+      40%      { transform: translate(4px,-2px); }
+      60%      { transform: translate(-2px, 4px); }
+      80%      { transform: translate(2px,-4px); }
+    }
+    @keyframes glitch-b {
+      0%,100%  { transform: translate(0,0); }
+      15%      { transform: translate(3px,-3px); }
+      45%      { transform: translate(-3px, 3px); }
+      75%      { transform: translate(3px, 3px); }
+    }
+    @keyframes flicker {
+      0%,19%,21%,23%,25%,54%,56%,100% { opacity: 1; }
+      20%,24%,55%                       { opacity: 0.85; }
+    }
+
+    .hero-sub {
+      font-family: var(--mono);
+      font-size: clamp(0.8rem, 2vw, 1.1rem);
+      color: var(--cyan);
+      letter-spacing: 0.3em;
+      margin-top: 1rem;
+      opacity: 0;
+      animation: fadeup 1s ease 0.8s forwards;
+    }
+
+    .hero-tagline {
+      font-family: var(--body);
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-weight: 300;
+      color: var(--text);
+      margin-top: 2rem;
+      max-width: 600px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeup 1s ease 1.2s forwards;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1.2rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeup 1s ease 1.6s forwards;
+    }
+
+    .btn {
+      font-family: var(--display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      padding: 0.85rem 2.2rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: #050a0e;
+    }
+    .btn-primary:hover {
+      background: #fff;
+      box-shadow: 0 0 30px rgba(0,255,136,0.8);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--cyan);
+      border: 1px solid var(--cyan);
+    }
+    .btn-outline:hover {
+      background: rgba(0,229,255,0.1);
+      box-shadow: 0 0 20px rgba(0,229,255,0.4);
+      transform: translateY(-2px);
+    }
+
+    @keyframes fadeup {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* TERMINAL TICKER */
+    .ticker {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(0,255,136,0.06);
+      border-top: 1px solid rgba(0,255,136,0.2);
+      padding: 0.6rem 0;
+      overflow: hidden;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--green);
+    }
+    .ticker-inner {
+      display: flex;
+      gap: 4rem;
+      animation: scroll-left 30s linear infinite;
+      white-space: nowrap;
+    }
+    @keyframes scroll-left {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ===== SECTION BASE ===== */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--green);
+      letter-spacing: 0.3em;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .section-title span { color: var(--green); }
+
+    .section-desc {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--text);
+      max-width: 600px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+
+    /* ===== CATEGORIES GRID ===== */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .cat-card {
+      background: var(--bg2);
+      border: 1px solid var(--dim);
+      padding: 2rem 1.5rem;
+      position: relative;
+      transition: all 0.3s ease;
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+      overflow: hidden;
+    }
+
+    .cat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: var(--accent, var(--green));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .cat-card:hover::before { transform: scaleX(1); }
+    .cat-card:hover {
+      border-color: var(--accent, var(--green));
+      box-shadow: 0 0 30px rgba(0,255,136,0.08), inset 0 0 40px rgba(0,255,136,0.03);
+      transform: translateY(-4px);
+    }
+
+    .cat-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .cat-name {
+      font-family: var(--display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--accent, var(--green));
+      margin-bottom: 0.5rem;
+    }
+
+    .cat-desc {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: #7a9eb0;
+      line-height: 1.7;
+    }
+
+    /* ===== CHALLENGES TABLE ===== */
+    .chall-table-wrap {
+      overflow-x: auto;
+    }
+
+    .chall-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+    }
+
+    .chall-table th {
+      text-align: left;
+      padding: 0.8rem 1.2rem;
+      font-family: var(--display);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--cyan);
+      border-bottom: 1px solid rgba(0,229,255,0.2);
+      background: rgba(0,229,255,0.04);
+    }
+
+    .chall-table td {
+      padding: 0.9rem 1.2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: var(--text);
+      transition: background 0.2s;
+    }
+
+    .chall-table tr:hover td {
+      background: rgba(0,255,136,0.04);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.7rem;
+      font-size: 0.7rem;
+      font-family: var(--mono);
+      letter-spacing: 0.1em;
+      border-radius: 2px;
+    }
+
+    .badge-easy   { background: rgba(0,255,136,0.15); color: var(--green); }
+    .badge-medium { background: rgba(255,215,0,0.15); color: var(--yellow); }
+    .badge-hard   { background: rgba(255,45,85,0.15); color: var(--red); }
+
+    .pts {
+      color: var(--yellow);
+      font-weight: 700;
+    }
+
+    /* ===== SCOREBOARD ===== */
+    .scoreboard {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .score-row {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      background: var(--bg2);
+      border: 1px solid var(--dim);
+      padding: 1rem 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .score-row:hover {
+      border-color: rgba(0,255,136,0.3);
+      transform: translateX(6px);
+    }
+
+    .score-row.gold   { border-left: 3px solid #ffd700; }
+    .score-row.silver { border-left: 3px solid #c0c0c0; }
+    .score-row.bronze { border-left: 3px solid #cd7f32; }
+
+    .score-rank {
+      font-family: var(--display);
+      font-size: 1.2rem;
+      font-weight: 900;
+      width: 2.5rem;
+      text-align: center;
+      color: rgba(255,255,255,0.3);
+    }
+    .score-row.gold   .score-rank { color: #ffd700; }
+    .score-row.silver .score-rank { color: #c0c0c0; }
+    .score-row.bronze .score-rank { color: #cd7f32; }
+
+    .score-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--dim);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .score-name {
+      flex: 1;
+      font-family: var(--mono);
+      font-size: 0.9rem;
+    }
+
+    .score-team {
+      font-size: 0.75rem;
+      color: #4a6a7a;
+    }
+
+    .score-pts {
+      font-family: var(--display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .score-bar-wrap {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--dim);
+    }
+    .score-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green), var(--cyan));
+      transition: width 1.2s ease;
+    }
+
+    /* ===== TERMINAL SECTION ===== */
+    .terminal {
+      background: #020810;
+      border: 1px solid rgba(0,255,136,0.2);
+      border-radius: 4px;
+      overflow: hidden;
+      max-width: 800px;
+      margin: 0 auto;
+      box-shadow: 0 0 60px rgba(0,255,136,0.08);
+    }
+
+    .terminal-bar {
+      background: #0d1f2d;
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(0,255,136,0.1);
+    }
+
+    .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .t-dot.r { background: #ff5f57; }
+    .t-dot.y { background: #ffbd2e; }
+    .t-dot.g { background: #28c840; }
+
+    .t-title {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: #4a6a7a;
+      margin-left: 0.5rem;
+    }
+
+    .terminal-body {
+      padding: 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      line-height: 1.9;
+      min-height: 280px;
+    }
+
+    .t-line { display: block; }
+    .t-prompt { color: var(--green); }
+    .t-cmd    { color: #fff; }
+    .t-out    { color: #4a6a7a; }
+    .t-flag   { color: var(--yellow); }
+    .t-err    { color: var(--red); }
+    .t-success{ color: var(--green); }
+
+    .cursor {
+      display: inline-block;
+      width: 8px; height: 1em;
+      background: var(--green);
+      vertical-align: bottom;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ===== COUNTDOWN ===== */
+    .countdown-wrap {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .cd-box {
+      background: var(--bg2);
+      border: 1px solid var(--dim);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      min-width: 100px;
+    }
+
+    .cd-num {
+      font-family: var(--display);
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--green);
+      text-shadow: 0 0 20px rgba(0,255,136,0.5);
+      display: block;
+      line-height: 1;
+    }
+
+    .cd-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: #4a6a7a;
+      letter-spacing: 0.2em;
+      margin-top: 0.4rem;
+      display: block;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--dim);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: var(--display);
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--green);
+      letter-spacing: 0.3em;
+    }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: #2a4a5a;
+      margin-top: 1rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* DIVIDER */
+    .divider {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--dim), transparent);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .cat-grid { grid-template-columns: 1fr; }
+      .countdown-wrap { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="glitch-wrap">
+    <h1 class="hero-title">CTF</h1>
+  </div>
+  <p class="hero-sub">// CAPTURE THE FLAG //</p>
+  <p class="hero-tagline">
+    Uji kemampuan hacking-mu. Temukan kerentanan. Rebut bendera.<br>
+    Jadilah yang terbaik di antara para elite.
+  </p>
+  <div class="hero-btns">
+    <a href="#challenges" class="btn btn-primary">MULAI CHALLENGE</a>
+    <a href="#about" class="btn btn-outline">PELAJARI LEBIH</a>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span>🚩 FLAG{welcome_to_ctf_arena} &nbsp;⬥&nbsp; 🔐 NEW: Web Exploitation Challenge Released &nbsp;⬥&nbsp; 💀 Team "nullbyte" captured flag in 00:04:32 &nbsp;⬥&nbsp; 🛡️ Forensics Round 3 Now Open &nbsp;⬥&nbsp; ⚡ 142 Teams Competing Right Now &nbsp;⬥&nbsp;</span>
+      <span>🚩 FLAG{welcome_to_ctf_arena} &nbsp;⬥&nbsp; 🔐 NEW: Web Exploitation Challenge Released &nbsp;⬥&nbsp; 💀 Team "nullbyte" captured flag in 00:04:32 &nbsp;⬥&nbsp; 🛡️ Forensics Round 3 Now Open &nbsp;⬥&nbsp; ⚡ 142 Teams Competing Right Now &nbsp;⬥&nbsp;</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">// 01. APA ITU CTF</p>
+  <h2 class="section-title">Capture <span>The Flag</span></h2>
+  <p class="section-desc">
+    CTF (Capture The Flag) adalah kompetisi cybersecurity di mana peserta memecahkan tantangan keamanan untuk menemukan string tersembunyi yang disebut "flag". Setiap flag memberikan poin, dan tim dengan poin tertinggi memenangkan kompetisi.
+  </p>
+
+  <!-- CATEGORIES -->
+  <div class="cat-grid">
+    <div class="cat-card" style="--accent: #00ff88;">
+      <span class="cat-icon">🌐</span>
+      <div class="cat-name">WEB EXPLOITATION</div>
+      <div class="cat-desc">SQL Injection, XSS, CSRF, SSRF, LFI/RFI, dan kerentanan web lainnya yang ada di dunia nyata.</div>
+    </div>
+    <div class="cat-card" style="--accent: #00e5ff;">
+      <span class="cat-icon">🔢</span>
+      <div class="cat-name">CRYPTOGRAPHY</div>
+      <div class="cat-desc">Pecahkan cipher, enkripsi lemah, dan protokol kriptografi yang salah diimplementasikan.</div>
+    </div>
+    <div class="cat-card" style="--accent: #ff2d55;">
+      <span class="cat-icon">🔍</span>
+      <div class="cat-name">FORENSICS</div>
+      <div class="cat-desc">Analisis file, memory dump, network traffic, dan steganografi untuk menemukan bukti tersembunyi.</div>
+    </div>
+    <div class="cat-card" style="--accent: #ffd700;">
+      <span class="cat-icon">💥</span>
+      <div class="cat-name">BINARY EXPLOITATION</div>
+      <div class="cat-desc">Buffer overflow, ROP chains, format string bugs — eksploitasi program di level mesin.</div>
+    </div>
+    <div class="cat-card" style="--accent: #bf5fff;">
+      <span class="cat-icon">⚙️</span>
+      <div class="cat-name">REVERSE ENGINEERING</div>
+      <div class="cat-desc">Bedah binary, decompile aplikasi, dan pahami kode yang sengaja diobfuskasi.</div>
+    </div>
+    <div class="cat-card" style="--accent: #ff8c00;">
+      <span class="cat-icon">📡</span>
+      <div class="cat-name">OSINT</div>
+      <div class="cat-desc">Gunakan sumber terbuka untuk menemukan informasi tersembunyi dari internet dan dunia nyata.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CHALLENGES -->
+<section id="challenges">
+  <p class="section-label">// 02. CHALLENGES</p>
+  <h2 class="section-title">Active <span>Challenges</span></h2>
+  <p class="section-desc">Tantangan aktif yang menunggu untuk dipecahkan. Pilih level-mu dan mulai berburu flag.</p>
+
+  <div class="chall-table-wrap">
+    <table class="chall-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>CHALLENGE</th>
+          <th>CATEGORY</th>
+          <th>DIFFICULTY</th>
+          <th>POINTS</th>
+          <th>SOLVES</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>001</td>
+          <td>Baby SQL</td>
+          <td style="color:#00ff88">Web</td>
+          <td><span class="badge badge-easy">EASY</span></td>
+          <td class="pts">100</td>
+          <td>247</td>
+        </tr>
+        <tr>
+          <td>002</td>
+          <td>Classic Caesar</td>
+          <td style="color:#00e5ff">Crypto</td>
+          <td><span class="badge badge-easy">EASY</span></td>
+          <td class="pts">75</td>
+          <td>312</td>
+        </tr>
+        <tr>
+          <td>003</td>
+          <td>Hidden in Plain Sight</td>
+          <td style="color:#ff2d55">Forensics</td>
+          <td><span class="badge badge-medium">MEDIUM</span></td>
+          <td class="pts">250</td>
+          <td>89</td>
+        </tr>
+        <tr>
+          <td>004</td>
+          <td>Stack Smash 101</td>
+          <td style="color:#ffd700">Pwn</td>
+          <td><span class="badge badge-medium">MEDIUM</span></td>
+          <td class="pts">300</td>
+          <td>54</td>
+        </tr>
+        <tr>
+          <td>005</td>
+          <td>The Malware Maze</td>
+          <td style="color:#bf5fff">Rev</td>
+          <td><span class="badge badge-hard">HARD</span></td>
+          <td class="pts">500</td>
+          <td>12</td>
+        </tr>
+        <tr>
+          <td>006</td>
+          <td>JWT Jailbreak</td>
+          <td style="color:#00ff88">Web</td>
+          <td><span class="badge badge-hard">HARD</span></td>
+          <td class="pts">450</td>
+          <td>19</td>
+        </tr>
+        <tr>
+          <td>007</td>
+          <td>Digital Ghost</td>
+          <td style="color:#ff8c00">OSINT</td>
+          <td><span class="badge badge-medium">MEDIUM</span></td>
+          <td class="pts">200</td>
+          <td>103</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SCOREBOARD -->
+<section id="scoreboard">
+  <p class="section-label">// 03. SCOREBOARD</p>
+  <h2 class="section-title">Top <span>Hackers</span></h2>
+  <p class="section-desc">Papan skor realtime. Siapa yang paling banyak capture flag-nya?</p>
+
+  <div class="scoreboard">
+    <div class="score-row gold">
+      <div class="score-rank">1</div>
+      <div class="score-avatar">🦊</div>
+      <div>
+        <div class="score-name">r41m_0x</div>
+        <div class="score-team">Team NullByte</div>
+      </div>
+      <div class="score-pts">4750 pts</div>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:95%"></div></div>
+    </div>
+    <div class="score-row silver">
+      <div class="score-rank">2</div>
+      <div class="score-avatar">🐺</div>
+      <div>
+        <div class="score-name">cr4ck3r_x</div>
+        <div class="score-team">Solo Player</div>
+      </div>
+      <div class="score-pts">4200 pts</div>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:84%"></div></div>
+    </div>
+    <div class="score-row bronze">
+      <div class="score-rank">3</div>
+      <div class="score-avatar">🦅</div>
+      <div>
+        <div class="score-name">d4rk_h4ck3r</div>
+        <div class="score-team">Team Phantom</div>
+      </div>
+      <div class="score-pts">3900 pts</div>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:78%"></div></div>
+    </div>
+    <div class="score-row">
+      <div class="score-rank">4</div>
+      <div class="score-avatar">🕷️</div>
+      <div>
+        <div class="score-name">sp1d3rw3b</div>
+        <div class="score-team">Team RootKit</div>
+      </div>
+      <div class="score-pts">3400 pts</div>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:68%"></div></div>
+    </div>
+    <div class="score-row">
+      <div class="score-rank">5</div>
+      <div class="score-avatar">🐉</div>
+      <div>
+        <div class="score-name">0xdr4g0n</div>
+        <div class="score-team">Solo Player</div>
+      </div>
+      <div class="score-pts">3100 pts</div>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:62%"></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TERMINAL DEMO -->
+<section id="demo">
+  <p class="section-label">// 04. FLAG SUBMISSION</p>
+  <h2 class="section-title">Submit <span>Your Flag</span></h2>
+  <p class="section-desc">Temukan flag? Masukkan ke terminal di bawah dan klaim poin-mu.</p>
+
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="t-dot r"></div>
+      <div class="t-dot y"></div>
+      <div class="t-dot g"></div>
+      <span class="t-title">ctf@arena:~</span>
+    </div>
+    <div class="terminal-body" id="termBody">
+      <span class="t-line"><span class="t-prompt">ctf@arena:~$ </span><span class="t-cmd">./challenge --list</span></span>
+      <span class="t-line t-out">Loading challenge database... OK</span>
+      <span class="t-line t-out">7 active challenges found.</span>
+      <span class="t-line">&nbsp;</span>
+      <span class="t-line"><span class="t-prompt">ctf@arena:~$ </span><span class="t-cmd">submit-flag "FLAG{y0ur_fl4g_h3r3}"</span></span>
+      <span class="t-line t-out">Verifying flag...</span>
+      <span class="t-line t-success">✓ FLAG ACCEPTED! +300 points awarded.</span>
+      <span class="t-line t-success">✓ Achievement unlocked: "First Blood"</span>
+      <span class="t-line">&nbsp;</span>
+      <span class="t-line"><span class="t-prompt">ctf@arena:~$ </span><span class="cursor"></span></span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- NEXT EVENT COUNTDOWN -->
+<section id="event">
+  <p class="section-label">// 05. NEXT EVENT</p>
+  <h2 class="section-title">CTF <span>Season 2</span></h2>
+  <p class="section-desc">Kompetisi besar berikutnya akan segera dimulai. Daftarkan timmu sekarang.</p>
+
+  <div class="countdown-wrap" id="countdown">
+    <div class="cd-box"><span class="cd-num" id="cd-days">00</span><span class="cd-label">DAYS</span></div>
+    <div class="cd-box"><span class="cd-num" id="cd-hours">00</span><span class="cd-label">HOURS</span></div>
+    <div class="cd-box"><span class="cd-num" id="cd-mins">00</span><span class="cd-label">MINUTES</span></div>
+    <div class="cd-box"><span class="cd-num" id="cd-secs">00</span><span class="cd-label">SECONDS</span></div>
+  </div>
+
+  <div style="margin-top: 2.5rem;">
+    <a href="#" class="btn btn-primary" style="display:inline-block;">DAFTAR SEKARANG</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">CTF</div>
+  <p class="footer-copy">
+    © 2026 CTF Arena — raimus1.github.io/CTF<br>
+    <span style="color:#1a3a4a;">Hack the planet. Capture all flags.</span>
+  </p>
+</footer>
+
+<script>
+  // COUNTDOWN — target: 14 days from now
+  const target = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
+  function updateCountdown() {
+    const diff = target - Date.now();
+    if (diff <= 0) return;
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent  = String(d).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
+    document.getElementById('cd-secs').textContent  = String(s).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // SCROLL REVEAL
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.cat-card, .score-row, .cd-box').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+
+  // GLITCH on hover hero
+  const title = document.querySelector('.hero-title');
+  title.addEventListener('mouseover', () => {
+    title.style.animation = 'none';
+    void title.offsetWidth;
+    title.style.animation = '';
+  });
+</script>
+</body>
+</html>
