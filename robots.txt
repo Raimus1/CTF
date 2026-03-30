@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://raimus1.github.io/CTF/sitemap.xml
